@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Literacy and Application: My Course Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row">
+
+    <!-- Mobile Menu Toggle Button (Visible on Small Screens) -->
+    <button id="menu-toggle" class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-indigo-600 text-white rounded-full shadow-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-gray-800 text-white z-40 p-6 shadow-2xl lg:relative lg:flex-shrink-0">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold text-indigo-400">Course Topics</h2>
+            <!-- Close Button for Mobile -->
+            <button id="menu-close" class="lg:hidden text-gray-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <ul id="nav-list" class="space-y-2">
+            <!-- Navigation items will be inserted here by JavaScript -->
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-4 sm:p-8 lg:p-12 transition-all duration-300 lg:ml-64 lg:mt-0 mt-16" id="content-container">
+        <div id="content" class="bg-white p-6 sm:p-8 rounded-xl shadow-lg min-h-[80vh]">
+            <!-- Content for the active page will be rendered here -->
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">Loading Portfolio...</h1>
+        </div>
+    </main>
+
+    <script>
+        // Fix: Changed how __app_id is accessed to avoid ReferenceError
+        const APP_ID = typeof window.__app_id !== 'undefined' ? window.__app_id : 'default-app-id';
+
+        // --- PAGE CONTENT DEFINITION ---
+        const pageContent = {
+            // 1. HOMEPAGE
+            'home': {
+                title: 'Computer Literacy and Application: My Course Portfolio',
+                content: `
+                    <div class="space-y-6">
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-indigo-700">Computer Literacy and Application: My Course Portfolio</h1>
+                        <p class="text-lg text-gray-700 leading-relaxed border-l-4 border-indigo-500 pl-4 bg-indigo-50 p-4 rounded-lg">
+                            Welcome! This portfolio documents my journey and practical skill development throughout the Computer Literacy and Application course. It serves as a comprehensive digital record of my learning, reflections, and technical achievements across fundamental computing topics. I am looking forward to showcasing the blend of theory and application I've mastered.
+                        </p>
+                        <div class="p-6 bg-gray-100 rounded-lg shadow-inner">
+                            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Course Overview</h2>
+                            <p class="text-gray-600">The course covered essential topics from the physical components of a computer to advanced application usage and basic programming concepts, providing a robust foundation for leveraging technology effectively in academic and professional settings. Use the navigation menu to explore my work on each topic.</p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // 2. TOPIC PAGES
+            'hardware': {
+                title: 'Hardware: Theory & Practice',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Hardware: Theory & Practice</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> I learned about the core internal components that constitute a modern computer system: the CPU, RAM, motherboard, GPU, and various storage devices (HDD/SSD). Understanding the relationship between these components is critical, particularly how the CPU's clock speed and core count, combined with the amount and speed of RAM, dictate overall system performance. I also gained practical knowledge of identifying components, which is vital for troubleshooting and upgrading a PC. This topic cemented my understanding of how software interacts with physical limits.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> The most surprising insight was how bottlenecks occur when one component significantly outpaces another (e.g., a fast CPU paired with slow storage). My main challenge was memorizing the different generations and socket types for CPUs and motherboards. This knowledge is immediately useful for advising friends on PC purchases or building custom systems.</p>
+                    <div class="my-6">
+                        <img src="https://placehold.co/800x400/3730a3/ffffff?text=Diagram+of+Computer+Components" alt="Diagram showing the internal components of a desktop computer, including CPU, motherboard, RAM, and SSD." class="rounded-lg shadow-md w-full h-auto object-cover">
+                        <small class="text-gray-500 mt-2 block">Visual: Conceptual diagram of a computer's internal architecture.</small>
+                    </div>
+                `
+            },
+
+            'numeral-systems': {
+                title: 'Numeral Systems',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Numeral Systems (Binary, Octal, Hexadecimal)</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> This section focused on the foundational concept of how computers represent and process data using different bases, primarily binary (base-2). I gained proficiency in converting numbers between decimal (base-10), binary, and hexadecimal (base-16). Hexadecimal is essential for tasks like color coding in web design or reading memory addresses, while binary is the machine's native language. Understanding the weight of each positional digit in any base system was key to successful conversions.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> The initial challenge was mastering the binary-to-hexadecimal conversion shortcut, but once understood, it drastically simplified the process. It was surprising to realize just how elegantly hexadecimal is used as a human-readable shorthand for long binary strings. This concept is fundamental to programming and data representation, extending beyond simple math into networking and security protocols.</p>
+                    <div class="my-6 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                        <code class="block font-mono text-sm text-yellow-800">Decimal 255 = Binary 11111111 = Hex FF</code>
+                        <small class="text-yellow-600 mt-2 block">Example of number conversion.</small>
+                    </div>
+                `
+            },
+
+            'networks': {
+                title: 'Computer Networks & Packet Tracer',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Computer Networks & Packet Tracer</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> I learned about the architecture of computer networks, including the difference between LANs and WANs, and the critical role of devices like routers, switches, and hubs. The course emphasized the OSI model, detailing how data is encapsulated and transmitted across its seven layers, from the physical cable to the application layer. Practical experience with Cisco Packet Tracer allowed me to simulate and configure network topologies, assigning IP addresses and setting up basic routing protocols to ensure connectivity.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> Troubleshooting connectivity issues in Packet Tracer was the main challenge; a single misconfigured subnet mask could break the entire network. The surprising takeaway was the complexity and precision required in IP addressing and subnetting. This practical skill is directly applicable to setting up home or small office networks, and understanding the core principles behind the internet's structure.</p>
+                    <div class="my-6">
+                        <img src="https://placehold.co/800x400/10b981/ffffff?text=Screenshot+of+a+Network+Topology+in+Packet+Tracer" alt="Screenshot of a simulated network topology showing a router connecting two different subnets of PCs and switches in Cisco Packet Tracer." class="rounded-lg shadow-md w-full h-auto object-cover">
+                        <small class="text-gray-500 mt-2 block">Visual: Simulated network environment screenshot.</small>
+                    </div>
+                `
+            },
+
+            'html': {
+                title: 'HTML Introduction',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">HTML Introduction</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> The introduction to HTML covered the fundamental structure of web pages, including the use of core tags like <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code>. I learned how to use structural elements like headings (<code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>), paragraphs (<code>&lt;p&gt;</code>), and lists (ordered and unordered). Crucially, I gained experience creating hyperlinks (<code>&lt;a&gt;</code>) and embedding images (<code>&lt;img&gt;</code>), focusing on the importance of semantic tagging to create meaningful and accessible web content.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> Initially, remembering the correct nesting order of tags was tricky, but constant practice clarified the parent-child relationship in the Document Object Model (DOM). The most surprising part was realizing how much of a modern website's structure still relies solely on this simple markup language. This skill allows me to understand the front-end of any website and start building my own basic web projects.</p>
+                    <div class="my-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                        <pre class="overflow-x-auto"><code class="font-mono text-sm text-blue-800">&lt;a href="link.html"&gt;Go to Page&lt;/a&gt;</code></pre>
+                        <small class="text-blue-600 mt-2 block">Example of basic HTML markup.</small>
+                    </div>
+                `
+            },
+
+            'ms-word': {
+                title: 'Microsoft Word Usage',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Microsoft Word Usage</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> This topic expanded my Word skills beyond basic typing and formatting. I learned advanced techniques like creating and managing styles (e.g., Heading 1, Normal), which are vital for maintaining consistency across long documents. Furthermore, I mastered inserting and updating a Table of Contents automatically, utilizing section breaks for different page numbering formats (e.g., Roman numerals for the introduction). Effective use of the Review tab for tracking changes and managing comments was also a key learning outcome.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> I was surprised by how much time the Styles feature saves, automating the consistency of large reports. The challenge was getting the Section Breaks and corresponding page numbering to work correctly without affecting the entire document. This practical knowledge is essential for generating academic papers, professional reports, and well-structured resumes in a standardized, efficient manner.</p>
+                    <div class="my-6">
+                        <img src="https://placehold.co/800x400/9333ea/ffffff?text=Screenshot+of+Word+Styles+Pane" alt="Screenshot of the Styles pane in Microsoft Word showing different text styles like Heading 1, Normal, and List Paragraph." class="rounded-lg shadow-md w-full h-auto object-cover">
+                        <small class="text-gray-500 mt-2 block">Visual: Screenshot demonstrating document styling in MS Word.</small>
+                    </div>
+                `
+            },
+
+            'ms-spreadsheet': {
+                title: 'Microsoft Spreadsheet Basics',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Microsoft Spreadsheet Basics</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> I gained foundational skills in data manipulation using Microsoft Excel, covering arithmetic, logical operations, and specialized functions. Key learning involved writing nested formulas and understanding absolute ($A$1) versus relative (A1) cell referencing. Specifically, I became proficient with statistical functions like <code>AVERAGEIF</code> for conditional calculations, and date/time functions such as <code>TODAY()</code> for dynamic date tracking. This allows me to perform complex data analysis and create automated tracking sheets.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> Initially, structuring complex logical formulas with multiple <code>IF</code> statements was challenging, requiring careful planning of parentheses and logic flow. I was amazed by the power of <code>AVERAGEIF</code> to instantaneously filter and process data, simplifying tasks that would take hours manually. This skill is universally applicable in budgeting, scientific data processing, and business reporting, making it one of the most valuable lessons of the course.</p>
+                    <div class="my-6 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <code class="block font-mono text-sm text-green-800">=AVERAGEIF(B2:B10, ">1000", C2:C10)</code>
+                        <small class="text-green-600 mt-2 block">Example of a conditional function in a spreadsheet.</small>
+                    </div>
+                `
+            },
+
+            'ms-powerpoint': {
+                title: 'Microsoft PowerPoint Presentation',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Microsoft PowerPoint Presentation</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> This module focused not just on creating slides, but on principles of effective visual communication. Key lessons included utilizing the Slide Master to enforce a consistent design, choosing appropriate and minimal text, and integrating high-quality, relevant multimedia. I learned to use animations and transitions sparingly and strategically to enhance clarity, rather than distract the audience. The emphasis was on designing clear, concise slides that act as visual aids, not teleprompters, ensuring the presenter remains the focus.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> The biggest shift in perspective was moving away from text-heavy slides toward a more visual and infographic-based approach. It was challenging to condense complex ideas into minimal bullet points, requiring better synthesis of information. This mastery of presentation design ensures that my future academic and professional pitches will be much more impactful and engaging to any audience.</p>
+                    <div class="my-6">
+                        <img src="https://placehold.co/800x400/f59e0b/ffffff?text=Example+of+Minimalist+PowerPoint+Slide+Design" alt="Example of a well-designed PowerPoint slide following the 'less is more' principle, featuring a large, relevant image and minimal bullet points." class="rounded-lg shadow-md w-full h-auto object-cover">
+                        <small class="text-gray-500 mt-2 block">Visual: Conceptual image of effective slide design.</small>
+                    </div>
+                `
+            },
+
+            'programming': {
+                title: 'Basic Programming',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Basic Programming Concepts</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> The introduction to programming focused on fundamental concepts applicable across various languages. I learned about variables, data types (integers, strings, booleans), control structures (if/else statements), and iteration (for and while loops). Understanding the concept of algorithms—a step-by-step procedure to solve a problem—was central to the topic. I practiced writing simple, logical functions to process data and output results, grasping how code executes sequentially and conditionally.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> Debugging logic errors was the most persistent challenge, requiring meticulous checking of every line and condition. The most insightful moment was realizing that programming is less about syntax and more about computational thinking and problem decomposition. This skill provides a powerful foundation for future studies in computer science and allows me to write simple automation scripts for everyday tasks.</p>
+                    <div class="my-6 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                        <pre class="overflow-x-auto"><code class="font-mono text-sm text-red-800">function checkGrade(score) {
+    if (score >= 90) { return "A"; }
+    else { return "B or lower"; }
+}</code></pre>
+                        <small class="text-red-600 mt-2 block">Example of a basic conditional function.</small>
+                    </div>
+                `
+            },
+
+            'google-apps': {
+                title: 'Google Forms & Google Sites',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Google Forms & Google Sites</h2>
+                    <p class="text-gray-700 mb-4"><strong>Summary:</strong> This topic focused on using two powerful collaboration and publishing tools. I learned to design structured data collection tools using Google Forms, including question types, validation rules, and linking responses to Sheets for analysis. Simultaneously, I gained experience building simple, professional websites using Google Sites, focusing on effective layout, embedding external content (like forms and calendars), and managing page hierarchy. The integration between these tools demonstrates the power of cloud-based application suites for efficiency.
+                    <p class="text-gray-700 mb-6"><strong>Reflection:</strong> The ease of embedding complex functionality like surveys directly into a website using Sites and Forms was the biggest surprise—it removes many technical hurdles. My biggest challenge was designing Forms that minimized bias and maximized data quality through smart validation. These skills are invaluable for organizing events, collecting academic research data, and quickly publishing information online without needing to write code.</p>
+                    <div class="my-6">
+                        <img src="https://placehold.co/800x400/3b82f6/ffffff?text=Screenshot+of+a+Google+Form+Interface" alt="Screenshot of the Google Forms editing interface, showing various question types being configured." class="rounded-lg shadow-md w-full h-auto object-cover">
+                        <small class="text-gray-500 mt-2 block">Visual: Screenshot of a form creation tool.</small>
+                    </div>
+                `
+            },
+
+            // 3. PERSONAL INFO PAGE
+            'personal-info': {
+                title: 'About Me',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">About Me & My Goals</h2>
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-6 sm:space-y-0 sm:space-x-8">
+                        <img src="https://placehold.co/150x150/1e40af/ffffff?text=Avatar" alt="A professional avatar placeholder image." class="rounded-full w-36 h-36 object-cover shadow-lg border-4 border-indigo-400">
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-2xl font-semibold text-gray-900">Dovran Babageldiyev</h3>
+                            <p class="text-indigo-600 font-medium mb-3">dbabageldiyev@na.edu</p>
+                            <p class="text-gray-700 leading-relaxed max-w-lg">
+                                My primary interest in computer literacy is leveraging technology for enhanced efficiency and data-driven decision-making. I believe that a strong foundation in application skills, networking, and basic programming is crucial for success in any modern field. My goal is to apply these tools to streamline workflows in my future studies and career, transforming complex problems into manageable, automated tasks.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // 4. CONTACT FORM PAGE
+            'contact': {
+                title: 'Contact Form',
+                content: `
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Contact Me</h2>
+                    <p class="text-gray-700 mb-6">Please use the embedded form below to send any questions, feedback regarding the course portfolio, or proposals for collaboration related to the topics discussed.</p>
+                    
+                    <div class="w-full bg-gray-100 p-4 rounded-lg shadow-inner">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Embedded Google Form</h3>
+                        <!-- ACTUAL GOOGLE FORM EMBED -->
+                        <iframe 
+                            src="https://docs.google.com/forms/d/e/1FAIpQLSdeUQGgEIIf0TdCMpB3Zd0Qn13m88mvQG-rNbEXpEfcN9ii4w/viewform?embedded=true" 
+                            width="100%" 
+                            height="800" 
+                            frameborder="0" 
+                            marginheight="0" 
+                            marginwidth="0"
+                            title="Visitor Contact Form">
+                            Loading…
+                        </iframe>
+                        <p class="text-sm text-gray-500 mt-3">
+                            <span class="font-bold">Form Note:</span> This form is powered by Google Forms for easy submission.
+                        </p>
+                    </div>
+                `
+            }
+        };
+
+        // --- NAVIGATION AND ROUTING LOGIC ---
+
+        const navOrder = [
+            { id: 'home', label: 'Home', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-2-2m2 2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+            { id: 'hardware', label: 'Hardware', icon: 'M9.75 17L9 20l-1.5-1.5M15 11l0 7.5' },
+            { id: 'numeral-systems', label: 'Numeral Systems', icon: 'M12 4.5l-6 6h12l-6-6z' },
+            { id: 'networks', label: 'Computer Networks', icon: 'M8 12h8m-4 4v-8' },
+            { id: 'html', label: 'HTML Introduction', icon: 'M10 20l4-16' },
+            { id: 'ms-word', label: 'Microsoft Word', icon: 'M9 12h6m-6 4h6' },
+            { id: 'ms-spreadsheet', label: 'Spreadsheets', icon: 'M7 7h10M7 11h10M7 15h10' },
+            { id: 'ms-powerpoint', label: 'PowerPoint', icon: 'M19 18l-7-5.25L5 18' },
+            { id: 'programming', label: 'Basic Programming', icon: 'M17 10l4 4m-4 0l-4-4' },
+            { id: 'google-apps', label: 'Google Forms & Sites', icon: 'M12 8v4m0 4h.01' },
+            { id: 'personal-info', label: 'About Me', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
+            { id: 'contact', label: 'Contact Form', icon: 'M3 8l7.89 5.26 7.72-4.16M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7' },
+        ];
+
+        const contentDiv = document.getElementById('content');
+        const navList = document.getElementById('nav-list');
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+
+        // Function to render the page content
+        function renderPage(pageId) {
+            const data = pageContent[pageId];
+            if (!data) {
+                contentDiv.innerHTML = '<h1 class="text-4xl font-bold text-red-600">404 - Page Not Found</h1>';
+                document.title = 'Page Not Found';
+                return;
+            }
+
+            contentDiv.innerHTML = data.content;
+            document.title = data.title;
+
+            // Update active state in navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('bg-indigo-700', 'text-white');
+                link.classList.add('hover:bg-gray-700');
+            });
+            const activeLink = document.getElementById(`nav-${pageId}`);
+            if (activeLink) {
+                activeLink.classList.add('bg-indigo-700', 'text-white');
+                activeLink.classList.remove('hover:bg-gray-700');
+            }
+
+            // Close sidebar after navigation on mobile
+            if (window.innerWidth < 1024) {
+                sidebar.classList.add('-translate-x-full');
+            }
+            
+            // Update URL hash without refreshing
+            history.pushState(null, '', `#${pageId}`);
+        }
+
+        // Function to initialize navigation menu
+        function initNav() {
+            navOrder.forEach(item => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.id = `nav-${item.id}`;
+                a.href = `#${item.id}`;
+                a.className = 'nav-link flex items-center p-3 rounded-lg transition duration-150 ease-in-out hover:bg-gray-700 text-sm font-medium';
+                a.innerHTML = `
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${item.icon}"></path></svg>
+                    <span>${item.label}</span>
+                `;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    renderPage(item.id);
+                });
+                li.appendChild(a);
+                navList.appendChild(li);
+            });
+        }
+
+        // --- EVENT LISTENERS ---
+
+        // Handle URL hash change (browser back/forward buttons)
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1) || 'home';
+            renderPage(hash);
+        });
+
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        menuClose.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        // Initial load
+        window.onload = function() {
+            initNav();
+            const initialHash = window.location.hash.slice(1) || 'home';
+            renderPage(initialHash);
+        };
+    </script>
+</body>
+</html>
